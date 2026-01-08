@@ -1,12 +1,5 @@
 return {
-  --  {
-  --    -- https://github.com/ellisonleao/gruvbox.nvim
-  --    "ellisonleao/gruvbox.nvim",
-  --    opts = {
-  --      transparent_mode = false,
-  --      dim_inactive = true,
-  --    },
-  --  },
+
   --  --{ "rebelot/kanagawa.nvim" },
   --  { "catppuccin/nvim", name = "catppuccin", lazy = false },
   --  { "rose-pine/neovim", name = "rose-pine" },

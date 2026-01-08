@@ -8,13 +8,13 @@ return {
     "lambdalisue/vim-suda",
   },
   -- sshfs plugin, heavensent for unstable connections
-  {
-    "uhs-robert/sshfs.nvim",
-    opts = {
-      -- Refer to the configuration section below
-      -- or leave empty for defaults
-    },
-  },
+  --{
+  --  "uhs-robert/sshfs.nvim",
+  --  opts = {
+  --    -- Refer to the configuration section below
+  --    -- or leave empty for defaults
+  --  },
+  --},
   {
     "numToStr/Comment.nvim",
     opts = {
@@ -22,6 +22,22 @@ return {
     },
   },
 
+  -- Configure LazyVim to load colorscheme
+  --{
+  --  -- https://github.com/ellisonleao/gruvbox.nvim
+  --  "ellisonleao/gruvbox.nvim",
+  --  opts = {
+  --    transparent_mode = false,
+  --    dim_inactive = true,
+  --  },
+  --},
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      --colorscheme = "gruvbox",
+      colorscheme = "catppuccin",
+    },
+  },
 
 
 
