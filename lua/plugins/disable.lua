@@ -3,8 +3,8 @@ return {
   { "saghen/blink.nvim",              enabled = false }, -- completion
   { "lewis6991/gitsigns.nvim",        enabled = false },
   -- { "catppuccin/nvim.nvim",    enabled = false },
-  { "mason-org/mason.nvim",           enabled = false },
-  { "mason-org/mason-lspconfig.nvim", enabled = false },
+  -- { "mason-org/mason.nvim",           enabled = false },
+  -- { "mason-org/mason-lspconfig.nvim", enabled = false },
 
   --- big QoL bundles
   -- { "folke/snacks.nvim",              enabled = false },
