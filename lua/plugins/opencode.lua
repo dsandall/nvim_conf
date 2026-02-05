@@ -11,6 +11,23 @@ return {
       ---@type opencode.Opts
       vim.g.opencode_opts = {
         -- Your configuration, if any — see `lua/opencode/config.lua`, or "goto definition" on the type or field.
+        provider = {
+          --   kitty = {
+          --     cmd = "--copy-env opencode --port",
+          --     location = "os-window",
+          --   },
+          toggle = function(self)
+            -- require("opencode").toggle()
+          end,
+          start = function(self)
+            local handle = io.popen("kitty -- opencode --port &")
+            handle:close()
+          end,
+          stop = function(self)
+            local handle = io.popen("pkill -f 'opencode --port'")
+            handle:close()
+          end,
+        },
       }
 
       -- Required for `opts.events.reload`.
