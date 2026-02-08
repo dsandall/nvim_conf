@@ -10,38 +10,12 @@ return {
 		config = function()
 			---@type opencode.Opts
 			vim.g.opencode_opts = {
-				-- Your configuration, if any — see `lua/opencode/config.lua`, or "goto definition" on the type or field.
-				provider = {
-					--   kitty = {
-					--     cmd = "--copy-env opencode --port",
-					--     location = "os-window",
-					--   },
-					toggle = function(self)
-						-- require("opencode").toggle()
-					end,
-					start = function(self)
-						local socket = vim.env.KITTY_LISTEN_ON
-						vim.fn.system({
-							"kitty",
-							"@",
-							"--to",
-							socket,
-							"launch",
-							"--type=os-window",
-							"--cwd=" .. vim.fn.getcwd(),
-							"--",
-							"opencode",
-							"--port",
-							"&",
-						})
-						-- local handle = io.popen("kitty -- opencode --port &")
-						-- handle:close()
-					end,
-					stop = function(self)
-						-- local handle = io.popen("pkill -f 'opencode --port'")
-						-- handle:close()
-					end,
-				},
+				--[[ provider = {
+					enabled = "kitty",
+					kitty = {
+						location = "os-window",
+					},
+				}, ]]
 			}
 
 			-- Required for `opts.events.reload`.
@@ -65,13 +39,13 @@ return {
 				return require("opencode").operator("@this ") .. "_"
 			end, { desc = "Add line to opencode", expr = true })
 
-			--[[ vim.keymap.set("n", "<S-C-u>", function()
+			vim.keymap.set("n", "<S-C-up>", function()
 				require("opencode").command("session.half.page.up")
 			end, { desc = "Scroll opencode up" })
-			vim.keymap.set("n", "<S-C-d>", function()
+			vim.keymap.set("n", "<S-C-down>", function()
 				require("opencode").command("session.half.page.down")
 			end, { desc = "Scroll opencode down" })
-]]
+
 			-- You may want these if you stick with the opinionated "<C-a>" and "<C-x>" above — otherwise consider "<leader>o…".
 			vim.keymap.set("n", "+", "<C-a>", { desc = "Increment under cursor", noremap = true })
 			vim.keymap.set("n", "-", "<C-x>", { desc = "Decrement under cursor", noremap = true })
