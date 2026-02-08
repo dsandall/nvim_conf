@@ -13,16 +13,10 @@ return {
 		opts = {
 			-- custom handling of parsers
 			ensure_installed = {
-				"astro",
 				"bash",
 				"c",
 				"css",
-				"diff",
 				"go",
-				"gomod",
-				"gowork",
-				"gosum",
-				"graphql",
 				"html",
 				"javascript",
 				"json",
@@ -35,12 +29,12 @@ return {
 				"vhdl",
 				"regex",
 				"toml",
-				"tsx",
 				"systemverilog",
 				"vim",
 				"fish",
 				"yaml",
 				"ruby",
+				"hyprlang",
 			},
 		},
 		config = function(_, opts)

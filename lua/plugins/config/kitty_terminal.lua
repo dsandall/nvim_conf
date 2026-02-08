@@ -1,3 +1,6 @@
+-- opens a Kitty terminal when <C-/>
+-- requires Kitty configuration
+
 vim.keymap.set("n", "<C-/>", function()
 	local socket = vim.env.KITTY_LISTEN_ON
 	if socket then
