@@ -1,9 +1,14 @@
+-- simply a place to put my keybind codes
+-- activates on LspAttach
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local buf = args.buf
 		local map = function(mode, lhs, rhs, desc)
 			vim.keymap.set(mode, lhs, rhs, { buffer = buf, desc = desc })
 		end
+
+		map("n", "<leader>cd", vim.diagnostic.open_float, "Show diagnostics")
 
 		map("n", "gd", vim.lsp.buf.definition, "Go to definition")
 		map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")

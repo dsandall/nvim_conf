@@ -1,0 +1,19 @@
+-- Install Lazy.Vim
+
+-- Edited to install lazypath under .config/nvim instead of .local
+local lazypath = vim.fn.stdpath("config") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable",
+		lazypath,
+	})
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({ import = "plugins" }) -- points lazy at the lua/plugins directory
+
+------
