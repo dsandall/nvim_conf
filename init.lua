@@ -8,3 +8,9 @@ vim.opt.number = true
 -- NOTE: Order Matters!
 -- Leader must be set prior
 require("lazyvim")
+
+vim.keymap.set("n", "<leader>dd", function()
+	-- TODO: make gooder
+	vim.diagnostic.goto_next()
+	vim.lsp.buf.code_action()
+end)
