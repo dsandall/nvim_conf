@@ -5,12 +5,16 @@ vim.g.loaded_netrw = 1
 -- space <leader>
 vim.g.mapleader = " "
 
--- vim.opt.number = true
+vim.opt.number = true
 vim.opt.relativenumber = true
 
 -- LSP folding
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
+-- don't fold on open
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
 
 -- NOTE: Order Matters!
 -- Leader must be set prior

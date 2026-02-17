@@ -11,4 +11,23 @@ end
 
 vim.keymap.set("n", "<leader>j", toggleInlay, { desc = "lsp inlay hints" })
 
+vim.keymap.set("n", "<leader>w", "<C-w>", { desc = "Window commands" })
+
+--[[
+vim.keymap.set("n", "<leader>wh", "<C-w>h", { desc = "Go to left window" })
+vim.keymap.set("n", "<leader>wj", "<C-w>j", { desc = "Go to bottom window" })
+vim.keymap.set("n", "<leader>wk", "<C-w>k", { desc = "Go to top window" })
+vim.keymap.set("n", "<leader>wl", "<C-w>l", { desc = "Go to right window" })
+vim.keymap.set("n", "<leader>ws", "<C-w>s", { desc = "Split window horizontally" })
+vim.keymap.set("n", "<leader>wv", "<C-w>v", { desc = "Split window vertically" })
+vim.keymap.set("n", "<leader>wc", "<C-w>c", { desc = "Close window" })
+vim.keymap.set("n", "<leader>wo", "<C-w>o", { desc = "Close other windows" })
+vim.keymap.set("n", "<leader>w=", "<C-w>=", { desc = "Equalize window sizes" })
+vim.keymap.set("n", "<leader>w+", "<C-w>+", { desc = "Increase window height" })
+vim.keymap.set("n", "<leader>w-", "<C-w>-", { desc = "Decrease window height" })
+vim.keymap.set("n", "<leader>w>", "<C-w>>", { desc = "Increase window width" })
+vim.keymap.set("n", "<leader>w<", "<C-w><", { desc = "Decrease window width" })
+vim.keymap.set("n", "<leader>w_", "<C-w>_", { desc = "Maximize window height" })
+vim.keymap.set("n", "<leader>w|", "<C-w>|", { desc = "Maximize window width" })
+ ]]
 return {}
