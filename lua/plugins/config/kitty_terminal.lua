@@ -1,6 +1,8 @@
 -- opens a Kitty terminal when <C-/>
 -- requires Kitty configuration
 --
+--[[
+--NOTE: removed in favor of a kitty-native bind (that works across all shell prgs)
 open_kitty_term = function(command)
 	local socket = vim.env.KITTY_LISTEN_ON
 	if not socket then
@@ -18,5 +20,6 @@ open_kitty_term = function(command)
 end
 
 vim.keymap.set("n", "<C-/>", open_kitty_term, { desc = "Open kitty terminal in cwd" })
+]]
 
 return {}
