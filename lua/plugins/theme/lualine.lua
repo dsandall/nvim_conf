@@ -2,85 +2,59 @@ return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
-		-- Get current theme info
-		-- local current_theme = vim.g.colors_name
-		-- print("Current colorscheme:", current_theme)
+		local function get_hl_hex(group, attr)
+			local hl = vim.api.nvim_get_hl(0, { name = group })
+			if hl[attr] then
+				return string.format("#%06x", hl[attr])
+			end
+			return nil
+		end
 
 		require("lualine").setup({
-			options = {
-				-- icons_enabled = true,
-				-- theme = "auto",
-				-- component_separators = { left = "", right = "" },
-				-- section_separators = { left = "", right = "" },
-				-- disabled_filetypes = {
-				-- 	statusline = {},
-				-- 	winbar = {},
-				-- },
-				-- ignore_focus = {},
-				-- always_divide_middle = true,
-				-- always_show_tabline = true,
-				globalstatus = true,
-				-- refresh = {
-				-- 	statusline = 1000,
-				-- 	tabline = 1000,
-				-- 	winbar = 1000,
-				-- 	refresh_time = 16, -- ~60fps
-				-- 	events = {
-				-- 		"WinEnter",
-				-- 		"BufEnter",
-				-- 		"BufWritePost",
-				-- 		"SessionLoadPost",
-				-- 		"FileChangedShellPost",
-				-- 		"VimResized",
-				-- 		"Filetype",
-				-- 		"CursorMoved",
-				-- 		"CursorMovedI",
-				-- 		"ModeChanged",
-				-- 	},
-				-- },
-			},
-			sections = {
-				lualine_a = { "mode" },
-				-- lualine_b = { "branch","diff", "diagnostics" },
-				lualine_b = { { "branch", show_filename_only = false } },
-				-- lualine_c = { "filename" },
-				lualine_c = {
-					{
-						"buffers",
-						buffers_color = {
-							-- sets the active buffer name to something that stands out (purple for edge theme)
-							active = function()
-								local function get_hl_hex(group, attr)
-									local hl = vim.api.nvim_get_hl(0, { name = group })
-									if hl[attr] then
-										return string.format("#%06x", hl[attr])
-									end
-									return nil
-								end
+			sections = {},
+			inactive_sections = {},
+			tabline = {
+				lualine_a = {
+					"location",
 
+					{
+						--NOTE: https://github.com/nvim-lualine/lualine.nvim#buffers-component-options
+						"buffers",
+						show_filename_only = true,
+						hide_filename_extension = false,
+						show_modified_status = true,
+
+						filter = function(bufnr)
+							local buftype = vim.api.nvim_get_option_value("buftype", { buf = bufnr })
+							local name = vim.api.nvim_buf_get_name(bufnr)
+
+							-- hide special buffers
+							if buftype ~= "" then
+								return false
+							end
+
+							-- hide unnamed buffers
+							if name == "" then
+								return false
+							end
+
+							return true
+						end,
+						buffers_color = {
+							active = function()
 								local accent = get_hl_hex("Statement", "fg")
-								return { fg = accent }
+								local fg = get_hl_hex("Normal", "bg")
+								return { bg = accent, fg = fg }
 							end,
 						},
 					},
 				},
-				-- lualine_x = { "encoding", "fileformat", "filetype" },
-				lualine_x = { "filetype" },
-				-- lualine_y = { "progress" },
-				lualine_z = { "location" },
+
+				lualine_y = { "diagnostics", "diff", "branch" },
 			},
-			-- inactive_sections = {
-			-- 	lualine_a = {},
-			-- 	lualine_b = {},
-			-- 	lualine_c = { "filename" },
-			-- 	lualine_x = { "location" },
-			-- 	lualine_y = {},
-			-- 	lualine_z = {},
-			-- },
-			-- tabline = {},
-			-- winbar = {},
-			-- inactive_winbar = {},
-			-- extensions = {},
 		})
+
+		-- Disable the statusline (lualine only manages the tabline)
+		vim.o.laststatus = 0
 	end,
 }
