@@ -5,6 +5,7 @@ vim.g.loaded_netrw = 1
 -- space <leader>
 vim.g.mapleader = " "
 
+vim.opt.conceallevel = 2 -- needed for obsidian.nvim
 vim.opt.number = true
 vim.opt.relativenumber = true
 
