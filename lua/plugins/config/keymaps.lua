@@ -13,6 +13,16 @@ vim.keymap.set("n", "<leader>j", toggleInlay, { desc = "lsp inlay hints" })
 
 vim.keymap.set("n", "<leader>w", "<C-w>", { desc = "Window commands" })
 
+-- LSP Jump to Diagnostics
+vim.keymap.set("n", "<leader>dd", function()
+	vim.diagnostic.jump({ count = 1, float = true }) -- go to next diagnostic, in floating win
+	-- vim.lsp.buf.code_action()
+end)
+vim.keymap.set("n", "<leader>da", function()
+	vim.diagnostic.jump({ count = 1, float = false })
+	vim.lsp.buf.code_action()
+end)
+
 --[[
 vim.keymap.set("n", "<leader>wh", "<C-w>h", { desc = "Go to left window" })
 vim.keymap.set("n", "<leader>wj", "<C-w>j", { desc = "Go to bottom window" })
