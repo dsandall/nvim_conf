@@ -22,9 +22,30 @@ vim.keymap.set("n", "<leader>da", function()
 	vim.diagnostic.jump({ count = 1, float = false })
 	vim.lsp.buf.code_action()
 end)
+vim.keymap.set("n", "<leader>bd", "<Cmd>bd<CR>", { desc = "Delete current buffer" })
+
+--
+-- Sessions
+--
+-- load the session for the current directory
+vim.keymap.set("n", "<leader>qs", function()
+	require("persistence").load()
+end)
+-- select a session to load
+vim.keymap.set("n", "<leader>qS", function()
+	require("persistence").select()
+end)
+-- load the last session
+vim.keymap.set("n", "<leader>ql", function()
+	require("persistence").load({ last = true })
+end)
+-- stop Persistence => session won't be saved on exit
+vim.keymap.set("n", "<leader>qd", function()
+	require("persistence").stop()
+end)
 
 --[[
-vim.keymap.set("n", "<leader>wh", "<C-w>h", { desc = "Go to left window" })
+vim.keymap.set("n", "<leader>wh", "<Cmd>bd<CR>", { desc = "Delete current buffer" })
 vim.keymap.set("n", "<leader>wj", "<C-w>j", { desc = "Go to bottom window" })
 vim.keymap.set("n", "<leader>wk", "<C-w>k", { desc = "Go to top window" })
 vim.keymap.set("n", "<leader>wl", "<C-w>l", { desc = "Go to right window" })

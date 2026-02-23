@@ -28,3 +28,10 @@ vim.o.showbreak = "↪ "
 require("lazyvim")
 
 require("lsp_window_theme").setup()
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(ev)
+		vim.keymap.del("n", "<leader>ca", { buffer = ev.buf })
+		vim.keymap.del("n", "<leader>cd", { buffer = ev.buf })
+	end,
+})
