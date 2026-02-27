@@ -7,6 +7,7 @@ return {
 		--[[ 	formatters_by_ft = {
 			lua = { "stylua" },
 		}, ]]
+		formatters_by_ft = { tex = { "tex-fmt" }, },
 		format_on_save = {
 			timeout_ms = 500,
 			lsp_fallback = true,
