@@ -85,19 +85,20 @@ return {
 						return -- Parser not available, skip silently
 					end
 
-					local parser_installed = pcall(vim.treesitter.get_parser, bufnr, parser_name)
+					-- Actually try to load the compiled parser (.so). Unlike get_parser,
+					-- this reliably reports whether the parser is really available.
+					local parser_installed = pcall(vim.treesitter.language.add, parser_name)
 
 					if not parser_installed then
 						-- If not installed, install parser synchronously
 						require("nvim-treesitter").install({ parser_name }):wait(30000)
+						-- let's check again
+						parser_installed = pcall(vim.treesitter.language.add, parser_name)
 					end
-
-					-- let's check again
-					parser_installed = pcall(vim.treesitter.get_parser, bufnr, parser_name)
 
 					if parser_installed then
 						-- Start treesitter for this buffer
-						vim.treesitter.start(bufnr, parser_name)
+						pcall(vim.treesitter.start, bufnr, parser_name)
 					end
 				end,
 			})
