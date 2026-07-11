@@ -29,6 +29,9 @@ require("lazyvim")
 
 require("lsp_window_theme").setup()
 
+-- open images (.png/.svg/etc) in Firefox instead of dumping binary into a buffer
+require("open_externally").setup()
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(ev)
 		vim.keymap.del("n", "<leader>ca", { buffer = ev.buf })

@@ -30,45 +30,6 @@ local palettes = {
 		Comment = { fg = "#8a6fa5", italic = true },
 	},
 
-	markdown = {
-		Normal                                 = { bg = "#f4f1e8", fg = "#2a2a2a" },
-		Comment                                = { fg = "#9a8f82", italic = true },
-		LineNr                                 = { fg = "#c2bfae" },
-		CursorLine                             = { bg = "#ece8dc" },
-		Visual                                 = { bg = "#d8d0c0" },
-
-		-- headings: warm earth/slate tones, heavier at the top
-		["@markup.heading.1.markdown"]         = { fg = "#3a5068", bold = true },
-		["@markup.heading.2.markdown"]         = { fg = "#4a6058", bold = true },
-		["@markup.heading.3.markdown"]         = { fg = "#7a5840", bold = true },
-		["@markup.heading.4.markdown"]         = { fg = "#5a5070" },
-		["@markup.heading.5.markdown"]         = { fg = "#687060" },
-		["@markup.heading.6.markdown"]         = { fg = "#807868" },
-
-		-- inline formatting
-		["@markup.bold.markdown"]              = { fg = "#1a1a1a", bold = true },
-		["@markup.italic.markdown"]            = { fg = "#4a3e34", italic = true },
-
-		-- inline code: slightly cooler/darker bg to distinguish it
-		["@markup.raw.block.markdown"]         = { bg = "#ded9cc", fg = "#5c3a1e" },
-
-		-- links
-		["@markup.link.label.markdown_inline"] = { fg = "#5b7fa6", underline = true },
-		["@markup.link.url.markdown_inline"]   = { fg = "#8a9a7a", italic = true },
-
-		-- lists
-		["@markup.list.markdown"]              = { fg = "#7a6a58" },
-		["@markup.list.checked.markdown"]      = { fg = "#6a8a6a" },
-		["@markup.list.unchecked.markdown"]    = { fg = "#9a8a78" },
-
-		-- blockquote
-		["@markup.quote.markdown"]             = { fg = "#7d7068", italic = true, bg = "#ede8da" },
-
-		-- the ##, **, _, etc. punctuation — muted so content stands out
-		["@punctuation.special.markdown"]      = { fg = "#b8b0a0" },
-		["@punctuation.delimiter.markdown"]    = { fg = "#b8b0a0" },
-	},
-
 	fish = {
 		Normal = { bg = "#0e1a1a" },
 		Comment = { fg = "#5f8787", italic = true },

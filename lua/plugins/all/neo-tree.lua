@@ -26,6 +26,9 @@ return {
 	config = function()
 		-- cache: path -> date string, or false if not in git / untracked
 		local git_date_cache = {}
+		-- cache: abs path -> { add = n, del = n } for uncommitted changes; nil = needs fetch
+		local diff_stats_cache = nil
+		local diff_stats_inflight = false
 		local refresh_timer = nil
 
 		local function schedule_refresh()
@@ -39,6 +42,51 @@ return {
 				require("neo-tree.sources.manager").refresh("filesystem")
 			end, 150)
 		end
+
+		local function fetch_diff_stats()
+			if diff_stats_inflight then return end
+			diff_stats_inflight = true
+			vim.system(
+				{ "git", "rev-parse", "--show-toplevel" },
+				{ text = true },
+				vim.schedule_wrap(function(root_result)
+					local root = (root_result.stdout or ""):gsub("%s+$", "")
+					if root_result.code ~= 0 or root == "" then
+						diff_stats_inflight = false
+						diff_stats_cache = {}
+						return
+					end
+					vim.system(
+						{ "git", "diff", "HEAD", "--numstat" },
+						{ text = true, cwd = root },
+						vim.schedule_wrap(function(result)
+							diff_stats_inflight = false
+							local stats = {}
+							for line in (result.stdout or ""):gmatch("[^\n]+") do
+								-- binary files show "-" for counts; skip them
+								local add, del, file = line:match("^(%d+)\t(%d+)\t(.+)$")
+								if add then
+									-- renames appear as "old => new" or "dir/{old => new}/f"
+									file = file:gsub("{.-=> (.-)}", "%1"):gsub("^.* => ", "")
+									stats[root .. "/" .. file] = { add = tonumber(add), del = tonumber(del) }
+								end
+							end
+							diff_stats_cache = stats
+							schedule_refresh()
+						end)
+					)
+				end)
+			)
+		end
+
+		-- uncommitted changes invalidate the diff stats (saves, checkouts, external edits)
+		vim.api.nvim_create_autocmd({ "BufWritePost", "FocusGained" }, {
+			group = vim.api.nvim_create_augroup("NeoTreeDiffStats", { clear = true }),
+			callback = function()
+				diff_stats_cache = nil
+				schedule_refresh()
+			end,
+		})
 
 		require("neo-tree").setup({
 			icon_provider = "mini.icons",
@@ -71,6 +119,30 @@ return {
 						if not cached then return {} end
 						return { text = cached, highlight = config.highlight or "NeoTreeDimText" }
 					end,
+					git_diff_stats = function(_config, node, _state)
+						if diff_stats_cache == nil then
+							fetch_diff_stats()
+							return {}
+						end
+						local path = node:get_id()
+						local stats = diff_stats_cache[path]
+						if not stats and node.type == "directory" then
+							-- aggregate all changed files under this directory
+							local add, del = 0, 0
+							local prefix = path .. "/"
+							for file, s in pairs(diff_stats_cache) do
+								if file:sub(1, #prefix) == prefix then
+									add, del = add + s.add, del + s.del
+								end
+							end
+							if add > 0 or del > 0 then stats = { add = add, del = del } end
+						end
+						if not stats then return {} end
+						return {
+							{ text = "+" .. stats.add .. " ", highlight = "NeoTreeGitAdded" },
+							{ text = "-" .. stats.del .. " ", highlight = "NeoTreeGitDeleted" },
+						}
+					end,
 				},
 				renderers = {
 					file = {
@@ -79,6 +151,7 @@ return {
 						{ "filtered_by" },
 						{ "name", use_git_status_colors = true },
 						{ "git_status", highlight = "NeoTreeDimText" },
+						{ "git_diff_stats" },
 						{ "git_last_modified", highlight = "NeoTreeDimText" },
 					},
 					directory = {
@@ -86,6 +159,7 @@ return {
 						{ "icon" },
 						{ "filtered_by" },
 						{ "name" },
+						{ "git_diff_stats" },
 						{ "git_last_modified", highlight = "NeoTreeDimText" },
 					},
 				},
