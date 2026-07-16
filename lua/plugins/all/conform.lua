@@ -7,7 +7,11 @@ return {
 		--[[ 	formatters_by_ft = {
 			lua = { "stylua" },
 		}, ]]
-		formatters_by_ft = { tex = { "tex-fmt" }, },
+		formatters_by_ft = {
+			tex = { "tex-fmt" },
+			systemverilog = { "verible_verilog_format" },
+			verilog = { "verible_verilog_format" },
+		},
 		format_on_save = {
 			timeout_ms = 500,
 			lsp_fallback = true,

@@ -1,6 +1,8 @@
 vim.lsp.config("slang-server", {
 	cmd = { "slang-server" },
-	root_markers = { ".git", ".slang" },
+	-- .slang first so a per-example config wins over the repo-wide .git root
+	-- (otherwise slang indexes the whole repo + its duplicate build/out modules)
+	root_markers = { ".slang", ".git" },
 	filetypes = {
 		"systemverilog",
 		"verilog",
