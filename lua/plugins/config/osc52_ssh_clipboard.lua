@@ -12,19 +12,21 @@ if is_ssh() then
 	-- Use this to enable the ability to provide system-clipboard
 	-- interaction with neovim over remote SSH connections
 	local osc52 = require("vim.ui.clipboard.osc52")
-	local copy_to_unnamedplus = osc52.copy("+")
-	local copy_to_unnamed = osc52.copy("*")
 
-	-- Create autocmd to copy yanked text to system clipboard
-	vim.api.nvim_create_autocmd("TextYankPost", {
-		callback = function()
-			-- Only handle yank operations, not delete or change
-			if vim.v.event.operator == "y" then
-				copy_to_unnamedplus(vim.v.event.regcontents)
-				copy_to_unnamed(vim.v.event.regcontents)
-			end
-		end,
-	})
+	-- Register OSC52 as the real clipboard provider so that ANY write to the
+	-- + / * registers (yanks via unnamedplus, but also plugin setreg() calls,
+	-- e.g. avante copying its OAuth URL) reaches the local clipboard.
+	-- Paste falls back to the unnamed register: querying the terminal's
+	-- clipboard (osc52.paste) hangs on terminals that refuse to answer;
+	-- use the terminal's own paste (ctrl+shift+v) for local->remote instead.
+	local function paste_fallback()
+		return vim.split(vim.fn.getreg('"'), "\n")
+	end
+	vim.g.clipboard = {
+		name = "OSC 52 (copy only)",
+		copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+		paste = { ["+"] = paste_fallback, ["*"] = paste_fallback },
+	}
 end
 
 vim.opt.clipboard = "unnamedplus"

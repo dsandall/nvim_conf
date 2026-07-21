@@ -30,6 +30,7 @@ return {
 				-- A mode must be in BOTH `modes` and here to get hybrid; "i"
 				-- alone (not in modes) previously did nothing.
 				hybrid_modes = { "i", "v", "V", "\22" },
+
 				linewise_hybrid_mode = true,
 				edit_range = { 1, 1 },
 			},
