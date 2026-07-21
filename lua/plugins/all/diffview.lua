@@ -4,7 +4,8 @@ return {
 	cmd = { "DiffviewOpen", "DiffviewFileHistory", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
 	keys = {
 		{ "<leader>gd", "<Cmd>DiffviewOpen<CR>", desc = "Diffview: working tree" },
-		{ "<leader>gD", "<Cmd>DiffviewOpen HEAD<CR>", desc = "Diffview: HEAD" },
+		{ "<leader>gD", "<Cmd>DiffviewOpen HEAD<CR>", desc = "Diffview: vs HEAD (git diff HEAD)" },
+		{ "<leader>gc", "<Cmd>DiffviewOpen HEAD~1..HEAD<CR>", desc = "Diffview: last commit (git show HEAD)" },
 		{ "<leader>gh", "<Cmd>DiffviewFileHistory %<CR>", desc = "Diffview: current file history" },
 		{ "<leader>gH", "<Cmd>DiffviewFileHistory<CR>", desc = "Diffview: repository history" },
 		{ "<leader>gq", "<Cmd>DiffviewClose<CR>", desc = "Diffview: close" },
