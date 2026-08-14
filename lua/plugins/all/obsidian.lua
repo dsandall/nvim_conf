@@ -25,6 +25,10 @@ return {
 			},
 		},
 
+		-- markview.nvim handles all in-buffer rendering; obsidian.nvim's UI
+		-- layer would double-decorate and warns about markview's conceallevel=3
+		ui = { enable = false },
+
 		-- see below for full list of options 👇
 	},
 }

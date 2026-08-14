@@ -16,6 +16,8 @@ return {
 		},
 		opts = {
 			preview = {
+				-- default 150ms makes the insert-mode hybrid reveal feel laggy
+				debounce = 25,
 				icon_provider = "mini",
 				filetypes = { "markdown", "quarto", "rmd" },
 				-- markview only renders in modes listed here; anything else
@@ -23,7 +25,7 @@ return {
 				-- present or selecting text unrenders the entire buffer. The
 				-- codes are the raw vim.fn.mode() strings (markview does no
 				-- normalization): "v" charwise, "V" linewise, "\22" = <C-v>.
-				modes = { "n", "no", "c", "v", "V", "\22" },
+				modes = { "n", "no", "c", "i", "v", "V", "\22" },
 				-- Subset of `modes` that reveals raw source only around the
 				-- cursor (bounded by edit_range below) instead of unrendering.
 				-- Same feel as render-markdown's anti_conceal above/below = 1.
