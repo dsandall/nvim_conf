@@ -5,7 +5,9 @@ return {
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		current_only = false,
-		winblend = 0, -- edge's Visual is too close to Normal to survive blending
+		-- Blended so wrapped text under the bar stays readable; the float
+		-- overlays the window's last columns and can't reserve space.
+		winblend = 40,
 		zindex = 40,
 		excluded_filetypes = {
 			"neo-tree",
