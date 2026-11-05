@@ -12,9 +12,13 @@ return {
 			systemverilog = { "verible_verilog_format" },
 			verilog = { "verible_verilog_format" },
 		},
-		format_on_save = {
-			timeout_ms = 500,
-			lsp_fallback = true,
-		},
+		-- tex is never formatted on save: tex-fmt isn't installed, so it fell through to
+		-- texlab -> latexindent, which reindents against STYLE.md's line rules
+		format_on_save = function(bufnr)
+			if vim.bo[bufnr].filetype == "tex" then
+				return
+			end
+			return { timeout_ms = 500, lsp_fallback = true }
+		end,
 	},
 }
